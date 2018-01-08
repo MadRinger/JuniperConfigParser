@@ -34,7 +34,7 @@ class JuniperConfig(dict):
         for key in data.keys():
             line = data[key]
             if type(line) is str:
-                if len(line) > 1:
+                if len(line) > 0:
                     yield intend*" "+"{} {};".format(key, line)
                 else:
                     yield intend*" "+"{};".format(key)
