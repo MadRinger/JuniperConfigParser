@@ -61,7 +61,7 @@ class JuniperConfig(dict):
                 else:
                     yield "set" + prefix + " {}".format(key)
             elif type(line) is dict:
-                for l in self.set_comands(data=line, prefix=str("{} {}").format(prefix, key)):
+                for l in self.set_commands(data=line, prefix=str("{} {}").format(prefix, key)):
                     yield l
             elif type(line) is list:
                 for l in line:
