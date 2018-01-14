@@ -7,7 +7,7 @@ class JuniperConfig(dict):
         result = {}
         for i in iterable:
             line = i.lstrip().rstrip("\n").rstrip(";")
-            if "#" in line:
+            if any(x in line for x in ["#","version"]):
                 continue
             if '{' in line:
                 result[line.split("{")[0].rstrip()] = self.__parse__(iterable)
@@ -46,3 +46,23 @@ class JuniperConfig(dict):
             elif type(line) is list:
                 for l in line:
                     yield intend*" "+"{} {};".format(key, l)
+
+    def set_commands(self, data=None, prefix=None):
+        if data is None:
+            data = self
+        # print(data)
+        if prefix is None:
+            prefix = ""
+        for key in data.keys():
+            line = data[key]
+            if type(line) is str:
+                if len(line) > 0:
+                    yield "set" + prefix + " {} {}".format(key, line)
+                else:
+                    yield "set" + prefix + " {}".format(key)
+            elif type(line) is dict:
+                for l in self.set_comands(data=line, prefix=str("{} {}").format(prefix, key)):
+                    yield l
+            elif type(line) is list:
+                for l in line:
+                    yield "set" + prefix + " {} {}".format(key, l)
