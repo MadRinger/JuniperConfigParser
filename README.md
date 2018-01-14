@@ -13,8 +13,9 @@ with open("new.router.conf",wb) as f:
 
 set_commands and as_file with sections
 
-As far as we are working with dicts, there is really no way to determine intend level or prefix, when it directly passed
-. To perform export on individual section, specify intend/prefix to call as
+As far as we are working with dicts, there is really no way to determine intend level or prefix, when dict directly
+passed
+. To perform export on individual section, specify intend/prefix to call as:
 
 ```
 a = JuniperConfig(open("router.conf"))
